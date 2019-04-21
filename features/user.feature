@@ -43,18 +43,18 @@ Feature: Accounts and User options
         When User logsout
         Then User is logged out of his account
 
-    Scenario: Correct password change
-        Given User is logged in 
-        And is on MyAccount page
-        When User gets to the change password page
-        And fills in new password creditials
-        And continues to change password
-        Then User password has changed
-    
     Scenario: Incorrect password change
         Given User is logged in 
         And is on MyAccount page
         When User gets to the change password page
         And fills in wrong password
+        And continues to change password
+        Then User password has not changed
+
+    Scenario: Correct password change
+        Given User is logged in 
+        And is on MyAccount page
+        When User gets to the change password page
+        And fills in new password creditials
         And continues to change password
         Then User password has changed
