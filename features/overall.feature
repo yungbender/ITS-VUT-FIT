@@ -13,9 +13,9 @@ Feature: Overall Page
         Then Prices are correctly changed to the chosen currency
 
     Scenario: Make an order
-        Given User is on the cart page 
+        Given User is logged in 
         And user has some item in the cart
-        And user is logged in
+        And user is on the cart page
         When User checks out 
         And fills out correct info
         And confirms order

@@ -36,6 +36,11 @@ def step_impl(context):
     loginButton = context.driver.find_element_by_xpath("//button[@type='submit']")
     loginButton.click()
 
-@given("There is atleast 1 registered customer")
+@when("User logs out")
 def step_impl(context):
-    pass
+    logoutButton = context.driver.find_element_by_xpath("//header[@id='header']/ul/li[4]/a/i")
+    logoutButton.click()
+
+@then("User is logged out")
+def step_impl(context):
+    context.driver.find_element_by_xpath("//*[contains(text(), 'Please enter your login details.')]")
