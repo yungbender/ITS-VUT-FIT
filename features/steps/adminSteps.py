@@ -38,9 +38,53 @@ def step_impl(context):
 
 @when("User logs out")
 def step_impl(context):
-    logoutButton = context.driver.find_element_by_xpath("//header[@id='header']/ul/li[4]/a/i")
+    logoutButton = context.driver.find_element_by_xpath("//header[@id='header']/ul/li[4]/a/span")
     logoutButton.click()
 
 @then("User is logged out")
 def step_impl(context):
     context.driver.find_element_by_xpath("//*[contains(text(), 'Please enter your login details.')]")
+
+@given("There is atleast 1 registered customer")
+def step_impl(context):
+    # try to register subject
+    try:
+        context.execute_steps("given User is not logged in")
+        context.execute_steps("given is on registration page")
+        context.execute_steps("when User fills out correct informations")
+        context.execute_steps("when confirms privacy policy")
+        context.execute_steps("when continues to registrate")
+    finally:
+        pass
+
+@when("Admin clicks Customers")
+def step_impl(context):
+    customersButton = context.driver.find_element_by_xpath("//div[@id='content']/div[2]/div/div[3]/div/div[3]/a")
+    customersButton.click()
+
+@then("All registered customers will show up")
+def step_impl(context):
+    # Find the registered subject
+    context.driver.find_element_by_xpath("//*[contains(text(), 'Miro Vančo')]")
+    context.driver.find_element_by_xpath("//*[contains(text(), 'mirovanco@mirovanco.sk')]")
+
+@given("There is atleast 1 order placed")
+def step_impl(context):
+    # order something
+    context.execute_steps("given User is logged in")
+    context.execute_steps("given user has some item in the cart")
+    context.execute_steps("given user is on the cart page")
+    context.execute_steps("when User checks out")
+    context.execute_steps("when fills out correct info")
+    context.execute_steps("when confirms order")
+    context.execute_steps("then order is completed")
+
+@when("Admin clicks orders")
+def step_impl(context):
+    ordersButton = context.driver.find_element_by_xpath("//a[contains(text(),'View more...')]")
+    ordersButton.click()
+
+@then("All placed orders will show up")
+def step_impl(context):
+    context.driver.find_element_by_xpath("//*[contains(text(), 'Miro Vančo')]")
+    context.driver.find_element_by_xpath("//*[contains(text(), 'Pending')]")

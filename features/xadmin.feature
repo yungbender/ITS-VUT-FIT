@@ -8,19 +8,18 @@ Feature: Admin panel and features
         Then User is logged in as Admin on Admin page 
 
     Scenario: Display all registered customers
-        Given User is logged in as Admin
-        And There is atleast 1 registered customer
+        Given There is atleast 1 registered customer
+        And user is logged in as Admin
         When Admin clicks Customers
         Then All registered customers will show up
 
     Scenario: Display all orders
-        Given User is logged in as Admin
-        And There is atleast 1 order placed
+        Given There is atleast 1 order placed
+        And User is logged in as Admin
         When Admin clicks orders
         Then All placed orders will show up
 
     Scenario: Admin logout
         Given User is logged in as Admin
-        And is on admin page
         When User logs out
         Then User is logged out

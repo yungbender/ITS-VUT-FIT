@@ -1,0 +1,114 @@
+\documentclass[titlepage]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{url}
+
+\begin{document}
+    
+    \title{Report pre projekt z ITS}
+    \author{Tomáš Sasák}
+    \maketitle
+
+    \section{Pôvodne neimplementované testy}
+    Testy sú označené číslami a neskôr budú týmito číslami referované.
+    \begin{verbatim}
+        1.
+        Feature: Admin panel and features
+
+        Scenario: Display all registered customers
+        Given User is logged in as Admin
+        And There is atleast 1 registered customer
+        When Admin clicks Customers
+        Then All registered customers will show up
+
+        2.
+        Feature: Admin panel and features
+
+        Scenario: Display all orders
+        Given User is logged in as Admin
+        And There is atleast 1 order placed
+        When Admin clicks orders
+        Then All placed orders will show up
+
+        3.
+        Feature: Admin panel and features
+
+        Scenario: Admin logout
+        Given User is logged in as Admin
+        And is on admin page
+        When User logs out
+        Then User is logged out
+
+        4.
+        Feature: Overall Page
+
+        Scenario: Make an order
+        Given User is on the cart page 
+        And user has some item in the cart
+        And user is logged in
+        When User checks out 
+        And fills out correct info
+        And confirms order
+        Then Order is completed 
+        And registered in database
+    \end{verbatim}
+
+    \section{Nalezené chyby a ich oprava}
+    \par 
+        Test číslo 1. a 2. boli upravené, a to výmenou postupnosti
+        prerekvizít (given príkazov), pre lepší význam a implementáciu testov.
+        Test teraz vyzerá následovne.
+        \begin{verbatim}
+        Feature: Admin panel and features
+
+        Scenario: Display all registered customers
+        Given There is atleast 1 registered customer
+        And user is logged in as Admin
+        When Admin clicks Customers
+        Then All registered customers will show up
+
+        Scenario: Display all orders
+        Given There is atleast 1 order placed
+        And User is logged in as Admin
+        When Admin clicks orders
+        Then All placed orders will show up
+        \end{verbatim}
+
+        Test číslo 3. bol upravený, a to vymazaním druhej prerekvizity
+        (given príkazu), tieto dva kroky sú zabudované v sebe.
+        Test teraz vyzerá následovne.
+
+        \begin{verbatim}
+        Feature: Admin panel and features
+        
+        Scenario: Admin logout
+        Given User is logged in as Admin
+        When User logs out
+        Then User is logged out
+        \end{verbatim}
+
+        Test číslo 4. bol upravený, a to prehodením prerekvizít pomedzi
+        sebou pre lepší zmysel testu a lepšiu implementáciu.
+        Test teraz vyzerá následovne.
+
+        \begin{verbatim}
+        Feature: Overall Page
+
+        Scenario: Make an order
+        Given User is logged in 
+        And user has some item in the cart
+        And user is on the cart page
+        When User checks out 
+        And fills out correct info
+        And confirms order
+        Then Order is completed 
+        And registered in database
+        \end{verbatim}
+
+        Pozn. Vo feature, \verb|user.feature| bolo vymenené poradie testov
+        \verb|Correct password change| a \verb|Incorrect password change|, lepší
+        význam dáva testovanie nefunkčnosti a potom funkčnosti.
+
+
+\end{document}

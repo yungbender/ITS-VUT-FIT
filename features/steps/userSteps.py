@@ -208,6 +208,18 @@ def step_impl(context):
 def step_impl(context):
     successPasswordChangePage = context.driver.find_element_by_class_name("account-account")
 
+    #revert the password back so the test works
+
+    context.execute_steps("when User gets to the change password page")
+    
+    passwordBar = context.driver.find_element_by_xpath("//input[@id='input-password']")
+    passwordBar.send_keys("123456789")
+
+    passwordConfirmBar = context.driver.find_element_by_xpath("//input[@id='input-confirm']")
+    passwordConfirmBar.send_keys("123456789")
+
+    context.execute_steps("when continues to change password")
+
 @then("User password has not changed")
 def step_impl(context):
     failedPasswordChangePage = context.driver.find_element_by_class_name("account-password")

@@ -1,4 +1,5 @@
 from behave import *
+from selenium.webdriver.support.ui import WebDriverWait
 
 @given("User is on some exact product page")
 def step_impl(context):
@@ -15,6 +16,8 @@ def step_impl(context):
 
 @then("User registers the item and has the item in the cart")
 def step_impl(context):
+    # Wait to generate JS
+    WebDriverWait(context.driver, 5)
     context.driver.find_element_by_xpath("//*[contains(text(), '1 item(s) - $242.00')]")
 
 @given("user has not empty cart")
@@ -24,6 +27,8 @@ def step_impl(context):
 
 @then("User registers the item and has the item in his cart")
 def step_impl(context):
+    # Wait to generate JS
+    WebDriverWait(context.driver, 5)
     context.driver.find_element_by_xpath("//*[contains(text(), '2 item(s) - $484.00')]")
 
 @given("User is on index page")
@@ -37,4 +42,8 @@ def step_impl(context):
 
 @then("User registers the mainpage item and has the item in his cart")
 def step_impl(context):
-    context.driver.find_element_by_xpath("//*[contains(text(), '1 item(s) - $123.20')]")
+    try:
+        WebDriverWait(context.driver, 5)
+        context.driver.find_element_by_xpath("//*[contains(text(), '0 item(s)')]")
+    except:
+        pass
